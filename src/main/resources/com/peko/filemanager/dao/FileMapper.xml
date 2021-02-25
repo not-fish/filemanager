@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.peko.filemanager.dao.FileMapper">
+    <insert id="insert" parameterType="com.peko.filemanager.entity.MyFile">
+        INSERT INTO t_file
+        <trim prefix="(" suffix=')' suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="oldFileName != null and oldFileName != ''">old_file_name,</if>
+            <if test="newFileName != null and newFileName != ''">new_file_name,</if>
+            <if test="ext != null and ext != ''">ext,</if>
+            <if test="path != null and path != ''">path,</if>
+            <if test="size != null and size != ''">size,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="wonImg != null">won_img,</if>
+            <if test="downloadCounts != null">download_counts,</if>
+            <if test="uploadTime != null">upload_time,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="oldFileName != null and oldFileName != ''">#{oldFileName},</if>
+            <if test="newFileName != null and newFileName != ''">#{newFileName},</if>
+            <if test="ext != null and ext != ''">#{ext},</if>
+            <if test="path != null and path != ''">#{path},</if>
+            <if test="size != null and size != ''">#{size},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="wonImg != null">#{wonImg},</if>
+            <if test="downloadCounts != null">#{downloadCounts},</if>
+            <if test="uploadTime != null">#{uploadTime},</if>
+        </trim>
+    </insert>
+
+    <select id="findAll" resultType="com.peko.filemanager.entity.MyFile">
+        select
+        <include refid="t_file_all"></include>
+        from t_file
+    </select>
+
+    <sql id="t_file_all">id,old_file_name,new_file_name,ext,path,size,type,download_counts,upload_time,won_img</sql>
+
+    <resultMap  id="myFile" type="com.peko.filemanager.entity.MyFile">
+        <result property="id" column="id"  />
+        <result property="oldFileName" column="old_file_name"/>
+        <result property="newFileName" column="new_file_name"/>
+        <result property="ext" column="ext"/>
+        <result property="path" column="path"/>
+        <result property="size" column="size"/>
+        <result property="type" column="type"/>
+        <result property="wonImg" column="won_img" jdbcType="BIT" javaType="java.lang.Boolean"/>
+        <result property="downloadCounts" column="download_counts"/>
+        <result property="uploadTime" column="upload_time"/>
+    </resultMap>
+
+</mapper>
