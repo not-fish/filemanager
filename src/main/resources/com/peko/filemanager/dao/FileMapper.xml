@@ -53,4 +53,11 @@
         <result property="uploadTime" column="upload_time"/>
     </resultMap>
 
+    <select id="findById" parameterType="java.lang.String" resultType="com.peko.filemanager.entity.MyFile">
+        select
+        <include refid="t_file_all"></include>
+        from t_file
+        where id = #{id}
+    </select>
+
 </mapper>

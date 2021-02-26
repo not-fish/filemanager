@@ -4,6 +4,7 @@ import com.peko.filemanager.dao.FileMapper;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -58,8 +61,9 @@ public class FileServiceImpl implements FileService{
 
         //根据日期生成目录
         String dataFormat = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        //上传文件的父目录 = 基本目录 + 日期目录
-        String parentDir = basedir + dataFormat;
+        String filePath = "/file/" + dataFormat;
+        //总路径 = 基本路径 + 文件路径
+        String parentDir = basedir + filePath;
         File dir = new File(parentDir);
         if(!dir.exists()){
             dir.mkdirs();
@@ -75,13 +79,10 @@ public class FileServiceImpl implements FileService{
         myFile.setExt(extension);
         myFile.setSize(String.valueOf(size));
         myFile.setType(type);
-        myFile.setPath(parentDir);
+        myFile.setPath(filePath);
         myFile.setUploadTime(new Date());
-        myFile.setWonImg(false);
         assert type != null;
-        if("image".equals(type.substring(0,5))){
-            myFile.setWonImg(true);
-        }
+        myFile.setWonImg(type.startsWith("image"));
 
         logger.info(String.valueOf(myFile));
 
@@ -103,4 +104,25 @@ public class FileServiceImpl implements FileService{
     public List<MyFile> list() {
         return fileMapper.findAll();
     }
+
+    @Override
+    public void download(String id, HttpServletResponse response) throws IOException {
+        MyFile myFile = fileMapper.findById(id);
+        if(myFile == null){
+            logger.info("未找到此文件：id = "+id);
+            return;
+        }
+
+        String path = basedir + myFile.getPath() +"/"+ myFile.getNewFileName();
+        FileInputStream is = new FileInputStream(new File(path));
+        response.setHeader("content-disposition","attachment;fileName="+ URLEncoder.encode(myFile.getOldFileName(),"UTF-8"));
+        ServletOutputStream os = response.getOutputStream();
+
+        IOUtils.copy(is,os);
+        IOUtils.closeQuietly(is);
+        IOUtils.closeQuietly(os);
+
+
+    }
+
 }

@@ -5,7 +5,7 @@ server:
 
 #文件基本路径
 file:
-  basedir: E:/fileUpload/
+  basedir: E:/peko
 
 
 spring:

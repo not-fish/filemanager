@@ -4,6 +4,8 @@ import com.peko.filemanager.entity.MyFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,4 +16,5 @@ import java.util.Map;
 public interface FileService {
     Map<String,String> upload(MultipartFile file) throws IOException;
     List<MyFile> list();
+    void download(String id, HttpServletResponse response) throws IOException;
 }
