@@ -60,4 +60,18 @@
         where id = #{id}
     </select>
 
+    <select id="query" parameterType="com.peko.filemanager.dto.QueryForm" resultType="com.peko.filemanager.entity.MyFile">
+        select <include refid="t_file_all"></include>
+        from t_file
+        where
+        <trim suffixOverrides="and">
+            <if test="oldFileName != null and oldFileName != ''">old_file_name = #{oldFileName} and</if>
+            <if test="newFileName != null and newFileName != ''">new_file_name = #{newFileName} and</if>
+            <if test="type != null and type != ''">type = #{type} and</if>
+            <if test="startTime != null">upload_time &gt;= #{startTime} and</if>
+            <if test="endTime != null">upload_time &lt;= #{endTime} and</if>
+        </trim>
+
+    </select>
+
 </mapper>

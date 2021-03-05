@@ -1,5 +1,6 @@
 package com.peko.filemanager.dao;
 
+import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,4 +16,5 @@ public interface FileMapper {
     List<MyFile> findAll();
     String findIsMagByid(@Param("id") Integer id);
     MyFile findById(String id);
+    List<MyFile> query(QueryForm form);
 }

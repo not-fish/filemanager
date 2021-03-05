@@ -1,5 +1,6 @@
 package com.peko.filemanager.controller;
 
+import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
 import com.peko.filemanager.service.impl.FileServiceImpl;
@@ -23,7 +24,7 @@ import java.util.*;
  * @author Peko
  */
 
-@Controller
+@RestController
 @RequestMapping("/file")
 public class FileController {
 
@@ -65,6 +66,16 @@ public class FileController {
     public void download(String id, HttpServletResponse response) throws IOException {
         logger.info(id);
         fileService.download(id,response);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/query")
+    @ResponseBody
+    public List<MyFile> query(QueryForm form, HttpServletResponse response) throws IOException {
+        logger.info(String.valueOf(form));
+        List<MyFile> lists =  fileService.query(form);
+        logger.info(String.valueOf(lists));
+        return lists;
     }
 
 }

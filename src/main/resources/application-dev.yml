@@ -25,3 +25,10 @@ mybatis:
   type-aliases-package: com.peko.filemanager.entity
   mapper-locations: classpath:com/peko/filemanager/dao/*.xml
   config-location: classpath:mybatis-config.xml
+
+logging:
+  level:
+    com:
+      peko:
+        filemanager:
+          dao: debug

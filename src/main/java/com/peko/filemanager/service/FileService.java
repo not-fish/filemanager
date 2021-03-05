@@ -1,5 +1,6 @@
 package com.peko.filemanager.service;
 
+import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,4 +18,5 @@ public interface FileService {
     Map<String,String> upload(MultipartFile file) throws IOException;
     List<MyFile> list();
     void download(String id, HttpServletResponse response) throws IOException;
+    List<MyFile> query(QueryForm form);
 }

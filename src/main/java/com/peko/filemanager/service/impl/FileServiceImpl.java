@@ -1,6 +1,7 @@
 package com.peko.filemanager.service.impl;
 
 import com.peko.filemanager.dao.FileMapper;
+import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
 import org.apache.commons.io.FilenameUtils;
@@ -123,6 +124,11 @@ public class FileServiceImpl implements FileService{
         IOUtils.closeQuietly(os);
 
 
+    }
+
+    @Override
+    public List<MyFile> query(QueryForm form){
+        return fileMapper.query(form);
     }
 
 }
