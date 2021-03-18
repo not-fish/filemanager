@@ -1,23 +1,18 @@
 package com.peko.filemanager.controller;
 
+import com.peko.filemanager.dto.NewFileNameDTO;
 import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
 import com.peko.filemanager.service.impl.FileServiceImpl;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -74,6 +69,16 @@ public class FileController {
     public List<MyFile> query(QueryForm form, HttpServletResponse response) throws IOException {
         logger.info(String.valueOf(form));
         List<MyFile> lists =  fileService.query(form);
+        logger.info(String.valueOf(lists));
+        return lists;
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/findOldFileName")
+    @ResponseBody
+    public List<String> findOldFileName(NewFileNameDTO dto, HttpServletResponse response) throws IOException {
+        logger.info(String.valueOf(dto));
+        List<String> lists =  fileService.findNewFileName(dto.getNewFileName());
         logger.info(String.valueOf(lists));
         return lists;
     }
