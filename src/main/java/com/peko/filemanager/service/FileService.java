@@ -19,5 +19,6 @@ public interface FileService {
     List<MyFile> list();
     void download(String id, HttpServletResponse response) throws IOException;
     List<MyFile> query(QueryForm form);
-    List<String> findNewFileName(String oldFileName);
+    List<String> findNewFileName(String newFileName);
+    List<String> findOldFileName(String oldFileName);
 }

@@ -136,4 +136,9 @@ public class FileServiceImpl implements FileService{
         return fileMapper.findNewFileName(oldFileName);
     }
 
+    @Override
+    public List<String> findOldFileName(String oldFileName) {
+        return fileMapper.findOldFileName(oldFileName);
+    }
+
 }

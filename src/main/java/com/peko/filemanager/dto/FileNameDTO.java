@@ -6,6 +6,7 @@ import lombok.Data;
  * @author Peko
  */
 @Data
-public class NewFileNameDTO {
+public class FileNameDTO {
     private String newFileName;
+    private String oldFileName;
 }

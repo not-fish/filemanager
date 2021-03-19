@@ -17,5 +17,6 @@ public interface FileMapper {
     String findIsMagByid(@Param("id") Integer id);
     MyFile findById(String id);
     List<MyFile> query(QueryForm form);
-    List<String> findNewFileName(String oldFileName);
+    List<String> findNewFileName(String newFileName);
+    List<String> findOldFileName(String oldFileName);
 }

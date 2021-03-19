@@ -1,6 +1,6 @@
 package com.peko.filemanager.controller;
 
-import com.peko.filemanager.dto.NewFileNameDTO;
+import com.peko.filemanager.dto.FileNameDTO;
 import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
@@ -74,11 +74,21 @@ public class FileController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/findOldFileName")
+    @PostMapping(value = "/findNewFileName")
     @ResponseBody
-    public List<String> findOldFileName(NewFileNameDTO dto, HttpServletResponse response) throws IOException {
+    public List<String> findNewFileName(FileNameDTO dto) throws IOException {
         logger.info(String.valueOf(dto));
         List<String> lists =  fileService.findNewFileName(dto.getNewFileName());
+        logger.info(String.valueOf(lists));
+        return lists;
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/findOldFileName")
+    @ResponseBody
+    public List<String> findOldFileName(FileNameDTO dto) throws IOException {
+        logger.info(String.valueOf(dto));
+        List<String> lists =  fileService.findOldFileName(dto.getOldFileName());
         logger.info(String.valueOf(lists));
         return lists;
     }
