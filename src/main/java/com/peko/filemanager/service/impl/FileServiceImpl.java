@@ -1,11 +1,14 @@
 package com.peko.filemanager.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.peko.filemanager.dao.FileMapper;
 import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -139,6 +142,31 @@ public class FileServiceImpl implements FileService{
     @Override
     public List<String> findOldFileName(String oldFileName) {
         return fileMapper.findOldFileName(oldFileName);
+    }
+
+    @Override
+    public void exportExcel(String idList, HttpServletResponse response) throws IOException {
+
+        String[] ids = idList.split("s");
+        List<MyFile> files = new ArrayList<>();
+
+        for (String id : ids) {
+            MyFile file = fileMapper.findById(id);
+            if(file != null){
+                files.add(file);
+            }
+        }
+
+        //参数1：exportParams 导出配置对象    参数2：导出的类型    参数3：导出数据集合
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("文件资源信息列表","文件信息"), MyFile.class,files);
+        response.setHeader("content-disposition","attachment;fileName="+ URLEncoder.encode("文件资料信息.xls","UTF-8"));
+        //将Excel写入固定位置
+//        FileOutputStream outputStream = new FileOutputStream("E:/myexcel/c.xls");
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        outputStream.close();
+        workbook.close();
+
     }
 
 }

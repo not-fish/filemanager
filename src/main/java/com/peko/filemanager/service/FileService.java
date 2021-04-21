@@ -21,4 +21,5 @@ public interface FileService {
     List<MyFile> query(QueryForm form);
     List<String> findNewFileName(String newFileName);
     List<String> findOldFileName(String oldFileName);
+    void exportExcel(String id, HttpServletResponse response) throws IOException;
 }

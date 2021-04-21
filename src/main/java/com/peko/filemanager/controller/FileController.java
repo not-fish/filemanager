@@ -1,18 +1,26 @@
 package com.peko.filemanager.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.peko.filemanager.dto.FileNameDTO;
 import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import com.peko.filemanager.service.FileService;
 import com.peko.filemanager.service.impl.FileServiceImpl;
+import org.apache.ibatis.reflection.ArrayUtil;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -43,7 +51,6 @@ public class FileController {
 
     /**
      * 获取所有文件信息
-     * @param file
      * @return
      * @throws IOException
      */
@@ -69,7 +76,6 @@ public class FileController {
     public List<MyFile> query(QueryForm form, HttpServletResponse response) throws IOException {
         logger.info(String.valueOf(form));
         List<MyFile> lists =  fileService.query(form);
-        logger.info(String.valueOf(lists));
         return lists;
     }
 
@@ -91,6 +97,14 @@ public class FileController {
         List<String> lists =  fileService.findOldFileName(dto.getOldFileName());
         logger.info(String.valueOf(lists));
         return lists;
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/exportExcel")
+    @ResponseBody
+    public void exportExcel(String idList, HttpServletResponse response) throws IOException {
+        logger.info(String.valueOf(idList));
+        fileService.exportExcel(idList,response);
     }
 
 }
