@@ -14,5 +14,4 @@ public class QueryForm {
     private String oldFileName;
     private Date startTime;
     private String type;
-    private String idList;
 }
