@@ -4,6 +4,7 @@ import com.peko.filemanager.dto.QueryForm;
 import com.peko.filemanager.entity.MyFile;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
 
