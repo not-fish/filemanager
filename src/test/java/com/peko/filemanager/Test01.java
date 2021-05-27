@@ -22,4 +22,16 @@ public class Test01 {
         List<MyFile> lists = fileMapper.findAll();
         System.out.println(lists);
     }
+
+    @Test
+    public void test02(){
+        int arr1[] = new int[]{50,400,400,300,120,300,100,150,100,100,150,120,160,100,100,400,300,300,300,400,160,150,240,100};
+
+        int sum = 0;
+        for (int value : arr1) {
+            sum += value;
+        }
+
+        System.out.println(sum);
+    }
 }

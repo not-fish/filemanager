@@ -71,11 +71,11 @@
             <if test="startTime != null">upload_time &gt;= #{startTime} and</if>
             <if test="endTime != null">upload_time &lt;= #{endTime} and</if>
         </trim>
-
+        order by upload_time desc
     </select>
 
     <select id="findNewFileName" parameterType="java.lang.String" resultType="java.lang.String">
-        select new_file_name
+        select distinct new_file_name
         from t_file
         <where>
             <if test="newFileName != null and newFileName != '' ">
@@ -85,7 +85,7 @@
     </select>
 
     <select id="findOldFileName" parameterType="java.lang.String" resultType="java.lang.String">
-        select old_file_name
+        select distinct old_file_name
         from t_file
         <where>
             <if test="oldFileName != null and oldFileName != '' ">

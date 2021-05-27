@@ -3,8 +3,36 @@ server:
   servlet:
     context-path: /filemanager
 
+#文件基本路径
 file:
-  basedir: /home/storage/fileUpload
+  basedir: /storage/fileUpload
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data01?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: admin
+
+#  单文件大小不能超过10MB，多文件不能超过100MB
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+mybatis:
+  type-aliases-package: com.peko.filemanager.entity
+  mapper-locations: classpath:com/peko/filemanager/dao/*.xml
+  config-location: classpath:mybatis-config.xml
+
+logging:
+  level:
+    com:
+      peko:
+        filemanager:
+          dao: debug
+  config: classpath:log4j2-prod.xml
 
 
 
